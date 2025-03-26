@@ -1,21 +1,18 @@
-from typing import TypedDict
+from uuid import uuid4
 
 from src.models.repository.GoalsRepository import GoalsRepository
-
-
-class RegistryData(TypedDict):
-    title: str
-    desiredFrequency: int
-
 
 class GoalService:
     def __init__(self) -> None:
         self.__goals_repository = GoalsRepository()
 
-    def create_goal(self, data: RegistryData) -> int:
-        print(data)
+    def create_goal(self, goal_data) -> int:
+        print(goal_data)
+
+        # Gerando uuid
+        goal_data["uuid"] = str(uuid4()) 
 
         # There is suposed to have some logic here !
-        goal = self.__goals_repository.insertGoal(data)
+        goal = self.__goals_repository.insertGoal(goal_data)
 
-        return {"goal": "Goal teste"}
+        return {"body": goal, "status_code": 201}

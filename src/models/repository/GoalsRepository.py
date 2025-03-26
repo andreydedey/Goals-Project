@@ -11,8 +11,8 @@ class GoalsRepository:
                 goal = Goal(
                     id=goal_info.get("uuid"),
                     title=goal_info.get("title"),
-                    description=goal_info.get("description"),
                     desiredWeekFrequency=goal_info.get("desiredWeekFrequency"),
+                    description=goal_info.get("description"),
                     id_usuario=goal_info.get("id_usuario"),
                 )
 

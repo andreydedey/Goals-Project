@@ -10,9 +10,9 @@ def create_goal():
     try:
         goal_service = GoalService()
 
-        response = goal_service.create_goal(data=request.json)
+        response = goal_service.create_goal(goal_info=request.json)
         print(response)
-        return jsonify(response), 200
+        return jsonify(response)
     except Exception as error:
         print(error)
         return jsonify({"error": error}), 500
