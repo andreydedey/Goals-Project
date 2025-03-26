@@ -6,7 +6,7 @@ user_route_bp = Blueprint("user", __name__, url_prefix="/user")
 
 
 @user_route_bp.route("register_user", methods=["POST"])
-def register_user():
+def register_user_route():
     try:
         user_service = UserService()
 

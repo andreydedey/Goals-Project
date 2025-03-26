@@ -10,9 +10,8 @@ class GoalService:
         self.__goals_repository = GoalsRepository()
         self.__user_repository = UserRepository()
 
-    def create_goal(self, goal_data) -> int:
-        print(goal_data)
 
+    def create_goal(self, goal_data):
         # Gerando uuid
         goal_data["uuid"] = str(uuid4()) 
 
@@ -25,3 +24,9 @@ class GoalService:
         print(goal)
 
         return jsonify({"body": goal}), 201
+
+
+    def get_week_pending_goals(self):
+        goals = self.__goals_repository.getWeekPendingGoals()
+
+        return jsonify({"body": goals}), 200
