@@ -1,10 +1,14 @@
 from uuid import uuid4
 
+from flask import jsonify
+
 from src.models.repository.GoalsRepository import GoalsRepository
+from src.models.repository.UserRepository import UserRepository
 
 class GoalService:
     def __init__(self) -> None:
         self.__goals_repository = GoalsRepository()
+        self.__user_repository = UserRepository()
 
     def create_goal(self, goal_data) -> int:
         print(goal_data)
@@ -12,7 +16,12 @@ class GoalService:
         # Gerando uuid
         goal_data["uuid"] = str(uuid4()) 
 
-        # There is suposed to have some logic here !
-        goal = self.__goals_repository.insertGoal(goal_data)
+        # Checking if user really exists
+        user = self.__user_repository.getUser(goal_data.get("user_id"))
+        if not user:
+            return jsonify({"body": "No user Found"}), 401
 
-        return {"body": goal, "status_code": 201}
+        goal = self.__goals_repository.insertGoal(goal_data)
+        print(goal)
+
+        return jsonify({"body": goal}), 201

@@ -9,9 +9,9 @@ class UserService:
     def register_user(self, user_data) -> int:
         print(user_data)
 
-        # Creat id
+        # Create ID
         user_data["uuid"] = str(uuid4())
 
         user = self.__user_repository.registerUser(user_data)
 
-        return {"body": user, "status_code": 201}
+        return ({"body": user}), 201

@@ -1,5 +1,7 @@
 from typing import Dict
 
+from sqlalchemy.exc import NoResultFound
+
 from src.models.entities.User import User
 from src.models.config.connection import db_connection_handler
 
@@ -23,3 +25,18 @@ class UserRepository:
                 database.session.rollback()
                 print(error)
                 return {"body": error, "status_code": 500}
+
+
+    def getUser(self, user_id: str) -> User:
+        with db_connection_handler as database:
+            try:
+                user = (
+                    database.session.query(User)
+                    .filter(user_id == User.id)
+                    .with_entities(User.name, User.email, User.password)
+                    .one()
+                )
+
+                return user
+            except NoResultFound:
+                return None

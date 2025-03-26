@@ -11,7 +11,7 @@ class Goal(Base):
     desiredWeekFrequency = Column(Integer, nullable=False)
     description = Column(Text, nullable=True)
     creationDate = Column(DateTime, default=func.now())
-    id_usuario = Column(String, ForeignKey("user.id"))
+    user_id = Column(String, ForeignKey("user.id"))
 
     def __repr__(self):
         return f"Goal [title={self.title}, description={self.description}, creationDate={self.creationDate}, completionDate={self.completionDate}]"
