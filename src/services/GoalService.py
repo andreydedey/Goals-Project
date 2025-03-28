@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from flask import jsonify
 
-from src.models.repository.GoalsRepository import GoalsRepository
+from models.repository.GoalRepository import GoalsRepository
 from src.models.repository.UserRepository import UserRepository
 
 class GoalService:
@@ -18,7 +18,7 @@ class GoalService:
         # Checking if user really exists
         user = self.__user_repository.getUser(goal_data.get("user_id"))
         if not user:
-            return jsonify({"body": "No user Found"}), 401
+            return jsonify({"body": "No user Found"}), 404
 
         goal = self.__goals_repository.insertGoal(goal_data)
         print(goal)

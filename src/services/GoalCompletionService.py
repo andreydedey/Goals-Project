@@ -1,15 +1,22 @@
 from uuid import uuid4
 
+from flask import jsonify
+
 from src.models.repository.GoalCompletionRepository import GoalCompletionRepository
+from models.repository.GoalRepository import GoalRepository
 
 class GoalCompletionService:
     def __init__(self) -> None:
         self.__goal_completion_repository = GoalCompletionRepository()
+        self.__goal_repository = GoalRepository()
 
-    def create_goal_completion(self, data) -> int:
-        print(data)
+    def create_goal_completion(self, goal_completion_data) -> int:
+        goal = self.__goal_repository.getGoal(goal_completion_data.get("goal_id"))
 
-        goal_completion = self.__goal_completion_repository.insertGoalCompletion(data)
+        if not goal:
+            return jsonify({"body": "No Goal found"}), 404
+
+        goal_completion = self.__goal_completion_repository.insertGoalCompletion(goal_completion_data)
 
         return {"body": goal_completion, "status_code": 201}
 

@@ -6,7 +6,7 @@ from src.models.entities.Goal import Goal
 from src.models.config.connection import db_connection_handler
 
 
-class GoalsRepository:
+class GoalRepository:
     def getGoal(self, goal_id: str):
         with db_connection_handler as database:
             try:
