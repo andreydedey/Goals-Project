@@ -2,12 +2,12 @@ from uuid import uuid4
 
 from flask import jsonify
 
-from models.repository.GoalRepository import GoalsRepository
+from src.models.repository.GoalRepository import GoalRepository
 from src.models.repository.UserRepository import UserRepository
 
 class GoalService:
     def __init__(self) -> None:
-        self.__goals_repository = GoalsRepository()
+        self.__goals_repository = GoalRepository()
         self.__user_repository = UserRepository()
 
 
