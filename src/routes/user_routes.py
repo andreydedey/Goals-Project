@@ -11,8 +11,7 @@ def register_user_route():
         user_service = UserService()
 
         response = user_service.register_user(user_data=request.json)
-        print(response)
-        return jsonify(response)
+        return response
     except Exception as error:
         print(error)
         return jsonify({"error": error}), 500

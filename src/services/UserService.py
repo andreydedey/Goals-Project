@@ -1,6 +1,9 @@
 from uuid import uuid4
 
+from flask import jsonify
+
 from src.models.repository.UserRepository import UserRepository
+
 
 class UserService:
     def __init__(self) -> None:
@@ -14,4 +17,4 @@ class UserService:
 
         user = self.__user_repository.registerUser(user_data)
 
-        return ({"body": user}), 201
+        return jsonify({"user": user}), 201

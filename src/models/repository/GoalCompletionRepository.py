@@ -7,8 +7,8 @@ class GoalCompletionRepository:
         with db_connection_handler as database:
             try:
                 goal_completion = GoalCompletion(
-                    id=goal_completion_data.get('id'),
-                    goal_id=goal_completion_data.get('goal_id')
+                    id=goal_completion_data.get("id"),
+                    goal_id=goal_completion_data.get("goal_id"),
                 )
                 database.session.add(goal_completion)
                 database.session.commit()
@@ -17,4 +17,3 @@ class GoalCompletionRepository:
             except Exception as error:
                 database.session.rollback()
                 print(error)
-                

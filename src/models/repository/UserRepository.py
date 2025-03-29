@@ -26,7 +26,6 @@ class UserRepository:
                 print(error)
                 return {"body": error, "status_code": 500}
 
-
     def getUser(self, user_id: str) -> User:
         with db_connection_handler as database:
             try:
