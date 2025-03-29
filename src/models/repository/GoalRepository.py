@@ -62,6 +62,7 @@ class GoalRepository:
                     database.session.execute(
                         select(
                             Goal.id,
+                            Goal.title,
                             Goal.desiredWeekFrequency,
                             func.count(GoalCompletion.id).label(
                                 "goalCompletionWeekCount"
@@ -80,10 +81,44 @@ class GoalRepository:
 
                 week_pending_goals_dict = [row._asdict() for row in week_pending_goals]
 
-                print(week_pending_goals_dict)
-
                 return week_pending_goals_dict
 
             except Exception as error:
-                print(error)
                 return error
+
+
+    def getWeekCompletedGoals(self):
+            now = arrow.now()
+
+            week_start = now.floor("week").datetime
+            week_end = now.ceil("week").datetime
+
+            with db_connection_handler as database:
+                try:
+                    week_completed_goals = (
+                        database.session.execute(
+                            select(
+                                Goal.id,
+                                Goal.title,
+                                Goal.desiredWeekFrequency,
+                                func.count(GoalCompletion.id).label(
+                                    "goalCompletionWeekCount"
+                                ),  # Contagem de completion
+                            )
+                            .outerjoin(GoalCompletion)
+                            .where(
+                                GoalCompletion.completion_date.between(week_start, week_end)
+                            )
+                            .group_by(Goal.id)
+                            .having(
+                                func.count(GoalCompletion.id) >= Goal.desiredWeekFrequency
+                            )
+                        )
+                    ).all()
+
+                    week_completed_goals_dict = [row._asdict() for row in week_completed_goals]
+
+                    return week_completed_goals_dict
+
+                except Exception as error:
+                    return error

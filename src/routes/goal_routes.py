@@ -19,3 +19,11 @@ def get_week_pending_goals_route():
 
     response = goal_service.get_week_pending_goals()
     return response
+
+
+@goal_route_bp.route("get_week_completed_goals", methods=["GET"])
+def get_week_completed_goals_route():
+    goal_service = GoalService()
+
+    response = goal_service.get_week_completed_goals()
+    return response

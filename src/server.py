@@ -8,11 +8,13 @@ from src.models.config.seed import create_seeds
 
 app = Flask(__name__)
 
+app.json.sort_keys = False
+
 # Connect to database
 db_connection_handler.connect_to_db()
 
 # seed data
-create_seeds()
+# create_seeds()
 
 # Register Bluepring
 app.register_blueprint(goal_route_bp)

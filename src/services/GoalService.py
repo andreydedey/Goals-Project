@@ -29,3 +29,8 @@ class GoalService:
         goals = self.__goals_repository.getWeekPendingGoals()
 
         return jsonify({"pending_goals": goals}), 200
+
+    def get_week_completed_goals(self):
+        goals = self.__goals_repository.getWeekCompletedGoals()
+
+        return jsonify({"completed_goals": goals}), 200
