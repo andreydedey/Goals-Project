@@ -17,8 +17,3 @@ A RESTful API developed in Flask for the magament of personal or professional go
 - Flask 3.1.0
 - SQLAlchemy 2.0.39
 
-## Database Schema
-
-![image](https://github.com/user-attachments/assets/8411a437-096b-4f32-b647-af4024ee1fac)
-
-
