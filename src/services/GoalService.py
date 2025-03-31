@@ -15,13 +15,16 @@ class GoalService:
         # Gerando uuid
         goal_data["uuid"] = str(uuid4())
 
+        user_id = goal_data.get("user_id")
+        print(user_id)
+
         # Checking if user really exists
-        user = self.__user_repository.getUser(goal_data.get("user_id"))
+        user = self.__user_repository.getUser(user_id)
+        print(user)
         if not user:
             return jsonify({"response": "No user Found"}), 404
 
         goal = self.__goals_repository.insertGoal(goal_data)
-        print(goal)
 
         return jsonify({"goal": goal}), 201
 

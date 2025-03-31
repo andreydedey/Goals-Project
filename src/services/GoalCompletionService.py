@@ -19,12 +19,10 @@ class GoalCompletionService:
         goal = self.__goal_repository.getGoal(goal_id)
 
         if not goal:
-            print("No goal Found")
             return jsonify({"body": "No Goal found"}), 404
 
         goal_completion = self.__goal_completion_repository.insertGoalCompletion(
             goal_completion_data
         )
-        print(goal_completion)
 
         return {"body": goal_completion, "status_code": 201}

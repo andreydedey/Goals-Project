@@ -24,7 +24,6 @@ class __DBConnectionHandler:
         self.session = None
 
     def connect_to_db(self) -> None:
-        print(self.__connection_string)
         self.__engine = create_engine(self.__connection_string)
 
         # Create tables

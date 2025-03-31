@@ -23,7 +23,6 @@ class UserRepository:
                 return user_info
             except Exception as error:
                 database.session.rollback()
-                print(error)
                 return {"body": error, "status_code": 500}
 
     def getUser(self, user_id: str) -> User:

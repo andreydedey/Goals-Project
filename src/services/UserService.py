@@ -10,8 +10,6 @@ class UserService:
         self.__user_repository = UserRepository()
 
     def register_user(self, user_data) -> int:
-        print(user_data)
-
         # Create ID
         user_data["uuid"] = str(uuid4())
 

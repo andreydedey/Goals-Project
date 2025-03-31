@@ -16,4 +16,3 @@ class GoalCompletionRepository:
                 return goal_completion_data
             except Exception as error:
                 database.session.rollback()
-                print(error)
