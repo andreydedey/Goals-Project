@@ -64,7 +64,7 @@ class GoalRepository:
                             Goal.id,
                             Goal.title,
                             Goal.desiredWeekFrequency,
-                            func.count(GoalCompletion.id).label(
+                            func.coalesce(func.count(GoalCompletion.id), 0).label(
                                 "goalCompletionWeekCount"
                             ),  # Contagem de completion
                         )
@@ -74,7 +74,7 @@ class GoalRepository:
                         )
                         .group_by(Goal.id)
                         .having(
-                            func.count(GoalCompletion.id) < Goal.desiredWeekFrequency
+                            func.coalesce(func.count(GoalCompletion.id), 0) < Goal.desiredWeekFrequency
                         )
                     )
                 ).all()
@@ -84,6 +84,7 @@ class GoalRepository:
                 return week_pending_goals_dict
 
             except Exception as error:
+                database.session.rollback()
                 return error
 
 
@@ -101,7 +102,7 @@ class GoalRepository:
                                 Goal.id,
                                 Goal.title,
                                 Goal.desiredWeekFrequency,
-                                func.count(GoalCompletion.id).label(
+                                func.coalesce(func.count(GoalCompletion.id), 0).label(
                                     "goalCompletionWeekCount"
                                 ),  # Contagem de completion
                             )
@@ -111,14 +112,17 @@ class GoalRepository:
                             )
                             .group_by(Goal.id)
                             .having(
-                                func.count(GoalCompletion.id) >= Goal.desiredWeekFrequency
+                                func.coalesce(func.count(GoalCompletion.id), 0) >= Goal.desiredWeekFrequency
                             )
                         )
                     ).all()
+
+                    print(week_completed_goals)
 
                     week_completed_goals_dict = [row._asdict() for row in week_completed_goals]
 
                     return week_completed_goals_dict
 
                 except Exception as error:
+                    database.session.roolback()
                     return error
